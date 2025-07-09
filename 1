@@ -2,6 +2,13 @@ products = {int(6846): "Apples", int(8243): "Oranges", int(2044):"Lemons" , int(
 amounts = {"Apples": int(1000), "Oranges": int(1000), "Lemons": int(1000), "Watermelons": int(100), "Bananas": int(1000)}
 confirmed = False
 product_ver = False
+final_amount = 0
+conf_pro = ""
+
+def amount_plus():
+    final_amount = amounts[order] + quant_change
+    print(f"The stock is now {final_amount}")
+
 
 
 print("Welcome to the fruit ordering portal")
@@ -14,7 +21,8 @@ while product_ver == False:
         wanted_pro = int(input("Please enter your wanted items four digit code: "))
 
 while not confirmed:
-    confirm = input(f"Would you like to change the quantities of {products[wanted_pro]}? (Y/N) ").upper().strip()
+    conf_pro = wanted_pro
+    confirm = input(f"Would you like to change the quantities of {products[conf_pro]}? (Y/N) ").upper().strip()
     if confirm == "Y" or confirm == "YES":
         print('')
         confirmed = True
@@ -26,15 +34,26 @@ while not confirmed:
     else:
         print("Please enter a valid input (Y for yes, and N for no)")
 
-add_minus = input(f"There are currently {amounts[order]} {products[wanted_pro]} in stock. Would you like to add or remove stock? (+/-) ").upper().strip()
-if add_minus == "+" or add_minus == "ADD" or add_minus == "PLUS":
-    quant_change = int(input(f"How many {products[wanted_pro]} would you like to add to the current stock? "))
-    if quant_change.is_alpha():
-        print("Please enter a number")
-elif add_minus == "-" or add_minus == "REMOVE" or add_minus == "MINUS":
-    quant_change = int(input(f"How many {products[wanted_pro]} would you like to minus from the current stock?"))
-    if quant_change.is_alpha():
-        print("Please enter a number")
-else:
-    print("Sorry, that input is not valid. Please enter a valid input (+/-)")
-    add_minus = input(f"Would you like to add or remove stock? (+/-) ").upper().strip()
+add_minus = input(f"There are currently {amounts[order]} {products[conf_pro]} in stock. Would you like to add or remove stock? (+/-) ").upper().strip()
+confirmed = False
+
+while not confirmed:
+    if add_minus == "+" or add_minus == "ADD" or add_minus == "PLUS":
+        try:
+            quant_change = int(input(f"How many {products[wanted_pro]} would you like to add to the current stock? "))
+            if quant_change < 1000:
+                confirmed = True
+            else:
+                print("That amount is too large")
+                quant_change = int(input(f"How many {products[wanted_pro]} would you like to add to the current stock? "))
+        except ValueError:
+            print("Please enter a number")
+    elif add_minus == "-" or add_minus == "REMOVE" or add_minus == "MINUS":
+        quant_change = int(input(f"How many {products[wanted_pro]} would you like to minus from the current stock?"))
+        if quant_change.is_alpha():
+            print("Please enter a number")
+    else:
+        print("Sorry, that input is not valid. Please enter a valid input (+/-)")
+        add_minus = input(f"Would you like to add or remove stock? (+/-) ").upper().strip()
+
+amount_plus(final_amount)
