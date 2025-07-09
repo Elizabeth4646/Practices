@@ -1,0 +1,35 @@
+products = {int(6846): "Apples", int(8243): "Oranges", int(2044):"Lemons" , int(4309): "Watermelon", int(3435): "Bananas"}
+confirmed = False
+product_ver = False
+
+def intro():
+    print("Welcome to the fruit ordering portal")
+    wanted_pro = int(input("Please enter your wanted items four digit code: "))
+
+
+def product_verification(product_ver):
+    while product_ver == False:
+        try:
+            print(f"Would you like to change the quantities of {products[wanted_pro]}?")
+            product_ver = True
+        except KeyError:
+            print("That product does not exist")
+            wanted_pro = int(input("Please enter your wanted items four digit code: "))
+
+
+intro(wanted_pro)
+product_verification(product_ver)
+
+while not confirmed:
+    confirm = input("\nWould you like to confirm this? (Y/N): ").upper().strip()
+    if confirm == "Y" or confirm == "YES":
+        print("Thank you for confirming!")
+        print('')
+        confirmed = True
+    elif confirm == "N" or confirm == "NO":
+        print('')
+        complete = False
+        username = str(input(
+            "Your username: \nMust be at least 5 characters long \nMust contain only alphanumeric characters (letters and numbers).\nCannot contain spaces or special characters.\n\nPlease enter your username: ")).strip()
+    else:
+        print("Please enter a valid input (Y for yes, and N for no)")
